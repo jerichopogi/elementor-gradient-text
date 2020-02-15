@@ -29,24 +29,44 @@ class GradientText extends Widget_Base{
 
   protected function _register_controls() {
 
-      $this->start_controls_section(
-        'section_content',
-        [
-          'label' => 'Settings',
-        ]
-      );
-  
-      $this->add_control(
-        'content',
-        [
-          'label' => 'Content',
-          'type' => \Elementor\Controls_Manager::WYSIWYG,
-          'default' => 'Some example content. Start Editing Here.'
-        ]
-      );
-  
-      $this->end_controls_section();
-    }
+    $this->start_controls_section(
+      'section_content',
+      [
+        'label' => 'Contents',
+      ]
+    );
+
+    $this->add_control(
+      'content',
+      [
+        'label' => 'Content',
+        'type' => \Elementor\Controls_Manager::WYSIWYG,
+        'default' => 'Some example content. Start Editing Here.'
+      ]
+    );
+
+    $this->end_controls_section();
+
+    $this->start_controls_section(
+			'content_section',
+			[
+				'label' => __( 'Color Settings', 'elementor-gradient-text' ),
+				'tab' => \Elementor\Controls_Manager::TAB_CONTENT,
+			]
+    );
+
+    $this->add_group_control(
+			Group_Control_Background::get_type(),
+			[
+				'name' => 'background',
+				'label' => __( 'Background', 'plugin-domain' ),
+				'types' => [ 'classic','gradient' ],
+				'selector' => '{{WRAPPER}} .elementor-gradient-text-wrapper',
+			]
+		);
+    
+    $this->end_controls_section();
+  }
     
   
     protected function render(){
@@ -61,7 +81,7 @@ class GradientText extends Widget_Base{
       );
   
       ?>
-      <div class="elementor-gradient-text-wrapper">
+      <div class="elementor-gradient-text-wrapper" style="-webkit-background-clip: text; -webkit-text-fill-color: transparent;">
         <div class="elementor-gradient-text-content" <?php echo $this->get_render_attribute_string('content'); ?>>
             <?php echo $settings['content'] ?>
           </div>
@@ -81,7 +101,7 @@ class GradientText extends Widget_Base{
           }
       );
           #>
-      <div class="elementor-gradient-text-wrapper">
+      <div class="elementor-gradient-text-wrapper" style="-webkit-background-clip: text; -webkit-text-fill-color: transparent;">
         <div class="elementor-gradient-text-content">
           {{{ settings.content }}}
         </div>
